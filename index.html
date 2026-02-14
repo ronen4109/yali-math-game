@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>החשבון של יהלי</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Varela Round', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      padding: 20px;
+      transition: background 0.5s ease;
+    }
+    body.correct {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+    body.wrong {
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-8px); }
+      80% { transform: translateX(8px); }
+    }
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    .screen.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    /* מסך פתיחה */
+    .welcome h1 {
+      font-size: 2.4rem;
+      color: #fff;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+    .welcome .sub {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 2.5rem;
+    }
+    .btn-start {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1.8rem;
+      padding: 18px 50px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(145deg, #ffd93d, #ff9f43);
+      color: #5d3a1a;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #d68910, 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #d68910, 0 12px 24px rgba(0,0,0,0.25);
+    }
+    .btn-start:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #d68910, 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .timer-toggle {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1.1rem;
+      padding: 12px 24px;
+      margin-bottom: 1.5rem;
+      border: 3px solid rgba(255,255,255,0.8);
+      border-radius: 30px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .timer-toggle:hover {
+      background: rgba(255,255,255,0.35);
+    }
+    .timer-toggle.on {
+      background: rgba(56, 239, 125, 0.4);
+      border-color: #38ef7d;
+    }
+    .timer-settings {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .timer-duration {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      cursor: pointer;
+    }
+    .timer-duration option { background: #5a4a8a; color: #fff; }
+    .timer-duration.hidden { display: none; }
+    /* מסך תרגיל */
+    .streak-box {
+      background: rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 10px 20px;
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: #fff;
+      display: inline-block;
+    }
+    .streak-box span {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+    .game-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .timer-box {
+      background: rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 1.4rem;
+      color: #fff;
+      direction: ltr;
+    }
+    .timer-box.low { background: rgba(255, 150, 50, 0.6); }
+    .timer-box.urgent { background: rgba(255, 80, 80, 0.6); animation: pulse-timer 0.8s ease infinite; }
+    @keyframes pulse-timer {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .timer-box.hidden { display: none; }
+    .exercise-text {
+      font-size: 3rem;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      margin: 1.5rem 0 2rem;
+      letter-spacing: 2px;
+      direction: ltr;
+    }
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 1rem;
+    }
+    .answer-btn {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1.6rem;
+      padding: 22px 16px;
+      border: 4px solid rgba(255,255,255,0.8);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .answer-btn:hover {
+      background: rgba(255,255,255,0.45);
+      transform: scale(1.03);
+      border-color: #fff;
+    }
+    .answer-btn:active {
+      transform: scale(0.98);
+    }
+    .answer-btn.wrong-choice {
+      background: rgba(255, 80, 80, 0.6);
+      border-color: #ff4444;
+      animation: pulse-red 0.3s ease;
+    }
+    @keyframes pulse-red {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    /* מסך צודק */
+    .result-screen .emoji {
+      font-size: 5rem;
+      margin: 1rem 0;
+      animation: bounce 0.6s ease;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    .result-screen h2 {
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      margin-bottom: 1rem;
+    }
+    .result-screen .next-btn {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.9);
+      color: #11998e;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .result-screen .next-btn:hover {
+      transform: scale(1.05);
+    }
+    .wrong-encourage {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+    .btn-restart {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      padding: 10px 20px;
+      border: 2px solid rgba(255,255,255,0.7);
+      border-radius: 25px;
+      background: transparent;
+      color: rgba(255,255,255,0.95);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-restart:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 100;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -20px;
+      animation: confetti-fall 3.5s ease-out forwards;
+    }
+    .confetti-piece.square { border-radius: 0; }
+    .confetti-piece.circle { border-radius: 50%; }
+    .confetti-piece.rect { width: 14px; height: 7px; }
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0.3;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- מסך פתיחה -->
+  <section id="welcome" class="screen active welcome">
+    <h1>🌈 החשבון של יהלי 🌈</h1>
+    <p class="sub">בוא נתאמן בחשבון!</p>
+    <div class="timer-settings">
+      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
+      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
+        <option value="15">15 שניות</option>
+        <option value="20">20 שניות</option>
+        <option value="30" selected>30 שניות</option>
+        <option value="45">45 שניות</option>
+        <option value="60">60 שניות</option>
+        <option value="90">90 שניות</option>
+      </select>
+    </div>
+    <button type="button" class="btn-start" id="btnStart">התחל</button>
+  </section>
+
+  <!-- מסך תרגיל -->
+  <section id="game" class="screen game">
+    <div class="game-top">
+      <div class="streak-box">🔥 רצף: <span id="streakCount">0</span></div>
+      <div id="timerBox" class="timer-box hidden">⏱ <span id="timerNum">30</span></div>
+      <div class="timer-settings">
+        <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
+        <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="30" selected>30</option>
+          <option value="45">45</option>
+          <option value="60">60</option>
+          <option value="90">90</option>
+        </select>
+      </div>
+    </div>
+    <div class="exercise-text" id="exerciseText">23 + 5</div>
+    <div class="answers" id="answersContainer"></div>
+    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
+  </section>
+
+  <!-- מסך תשובה נכונה -->
+  <section id="correctScreen" class="screen result-screen">
+    <div class="emoji">🎉 🌟 🎉</div>
+    <h2>כל הכבוד יהלי!</h2>
+    <p class="wrong-encourage">מצוין!</p>
+    <div class="timer-settings" style="margin-top: 1rem;">
+      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
+      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="30" selected>30</option>
+        <option value="45">45</option>
+        <option value="60">60</option>
+        <option value="90">90</option>
+      </select>
+    </div>
+    <button type="button" class="next-btn" id="btnNextCorrect">הבא →</button>
+    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
+  </section>
+
+  <!-- מסך תשובה שגויה -->
+  <section id="wrongScreen" class="screen result-screen">
+    <div class="emoji">💪 😊</div>
+    <h2>כמעט! נסה שוב</h2>
+    <p class="wrong-encourage">אפשר לנסות שוב – אתה יכול!</p>
+    <div class="timer-settings" style="margin-top: 1rem;">
+      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
+      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="30" selected>30</option>
+        <option value="45">45</option>
+        <option value="60">60</option>
+        <option value="90">90</option>
+      </select>
+    </div>
+    <button type="button" class="next-btn" id="btnNextWrong">נסה שוב</button>
+    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
+  </section>
+
+  <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      const welcome = document.getElementById('welcome');
+      const game = document.getElementById('game');
+      const correctScreen = document.getElementById('correctScreen');
+      const wrongScreen = document.getElementById('wrongScreen');
+      const exerciseText = document.getElementById('exerciseText');
+      const answersContainer = document.getElementById('answersContainer');
+      const streakCount = document.getElementById('streakCount');
+      const btnStart = document.getElementById('btnStart');
+      const btnNextCorrect = document.getElementById('btnNextCorrect');
+      const btnNextWrong = document.getElementById('btnNextWrong');
+      const confettiContainer = document.getElementById('confettiContainer');
+      const timerBox = document.getElementById('timerBox');
+      const timerNum = document.getElementById('timerNum');
+
+      let streak = 0;
+      let currentAnswer = 0;
+      let currentOptions = [];
+      let audioCtx = null;
+      let timerEnabled = false;
+      let timerInterval = null;
+      let timerSeconds = 30;
+
+      function updateTimerUI() {
+        document.querySelectorAll('.timer-toggle').forEach(function (btn) {
+          btn.textContent = timerEnabled ? '⏱ טיימר: פעיל' : '⏱ הוסף טיימר';
+          btn.classList.toggle('on', timerEnabled);
+          btn.setAttribute('aria-pressed', timerEnabled);
+        });
+        document.querySelectorAll('.timer-duration').forEach(function (sel) {
+          sel.value = String(timerSeconds);
+          sel.classList.toggle('hidden', !timerEnabled);
+        });
+      }
+
+      function getAudio() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+      }
+
+      function playTone(freq, start, duration, type) {
+        try {
+          var ctx = getAudio();
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.frequency.value = freq;
+          osc.type = type || 'sine';
+          gain.gain.setValueAtTime(0.15, start);
+          gain.gain.exponentialRampToValueAtTime(0.01, start + duration);
+          osc.start(start);
+          osc.stop(start + duration);
+        } catch (e) {}
+      }
+
+      function soundCorrect() {
+        try {
+          var t = getAudio().currentTime;
+          playTone(523, t, 0.12, 'sine');
+          playTone(659, t + 0.12, 0.12, 'sine');
+          playTone(784, t + 0.24, 0.2, 'sine');
+        } catch (e) {}
+      }
+
+      function soundWrong() {
+        try {
+          var t = getAudio().currentTime;
+          playTone(200, t, 0.15, 'sine');
+          playTone(180, t + 0.15, 0.2, 'sine');
+        } catch (e) {}
+      }
+
+      function soundTap() {
+        try {
+          var t = getAudio().currentTime;
+          playTone(400, t, 0.06, 'sine');
+        } catch (e) {}
+      }
+
+      function rand(max) {
+        return Math.floor(Math.random() * (max + 1));
+      }
+
+      function genExercise() {
+        const op = rand(2);
+        let a, b, result;
+        if (op === 0) {
+          a = rand(198) + 1;
+          b = rand(200 - a);
+          result = a + b;
+          exerciseText.textContent = a + ' + ' + b;
+        } else if (op === 1) {
+          var larger = rand(199) + 1;
+          var smaller = rand(larger);
+          result = larger - smaller;
+          exerciseText.textContent = larger + ' − ' + smaller;
+        } else {
+          a = rand(13) + 1;
+          b = rand(13) + 1;
+          result = a * b;
+          exerciseText.textContent = a + ' × ' + b;
+        }
+        currentAnswer = result;
+        const numOptions = 3 + rand(1);
+        const options = new Set([result]);
+        while (options.size < numOptions) {
+          const offset = rand(40) - 20;
+          if (offset !== 0) options.add(Math.max(0, Math.min(200, result + offset)));
+        }
+        currentOptions = Array.from(options).sort(function (x, y) { return x - y; });
+        return currentOptions;
+      }
+
+      function showScreen(screenEl) {
+        document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+        screenEl.classList.add('active');
+        document.body.classList.remove('correct', 'wrong');
+        stopTimer();
+      }
+
+      function stopTimer() {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+      }
+
+      function startTimer() {
+        stopTimer();
+        if (!timerEnabled) {
+          timerBox.classList.add('hidden');
+          return;
+        }
+        timerBox.classList.remove('hidden');
+        timerBox.classList.remove('low', 'urgent');
+        var sec = timerSeconds;
+        timerNum.textContent = sec;
+        timerInterval = setInterval(function () {
+          sec--;
+          timerNum.textContent = sec;
+          timerBox.classList.remove('low', 'urgent');
+          if (sec <= 5) timerBox.classList.add('urgent');
+          else if (sec <= 10) timerBox.classList.add('low');
+          if (sec <= 0) {
+            stopTimer();
+            soundWrong();
+            streak = 0;
+            streakCount.textContent = '0';
+            document.body.classList.add('wrong');
+            setTimeout(function () {
+              showScreen(wrongScreen);
+            }, 600);
+          }
+        }, 1000);
+      }
+
+      function runConfetti() {
+        confettiContainer.innerHTML = '';
+        var colors = ['#ffd93d', '#ff9f43', '#6bcb77', '#4d96ff', '#ff6b9d', '#c44569', '#38ef7d', '#f093fb'];
+        var shapes = ['square', 'circle', 'rect'];
+        for (var i = 0; i < 75; i++) {
+          var p = document.createElement('div');
+          p.className = 'confetti-piece ' + shapes[rand(shapes.length - 1)];
+          p.style.left = rand(100) + '%';
+          p.style.background = colors[rand(colors.length - 1)];
+          p.style.animationDelay = (rand(300) / 1000) + 's';
+          p.style.animationDuration = (2.8 + rand(700) / 1000) + 's';
+          confettiContainer.appendChild(p);
+        }
+        setTimeout(function () { confettiContainer.innerHTML = ''; }, 4000);
+      }
+
+      function renderGame() {
+        const options = genExercise();
+        answersContainer.innerHTML = '';
+        options.forEach(function (val) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'answer-btn';
+          btn.textContent = val;
+          btn.addEventListener('click', function () {
+            stopTimer();
+            if (val === currentAnswer) {
+              soundCorrect();
+              streak++;
+              streakCount.textContent = streak;
+              document.body.classList.add('correct');
+              showScreen(correctScreen);
+              runConfetti();
+            } else {
+              soundWrong();
+              streak = 0;
+              streakCount.textContent = '0';
+              btn.classList.add('wrong-choice');
+              document.body.classList.add('wrong');
+              setTimeout(function () {
+                showScreen(wrongScreen);
+              }, 600);
+            }
+          });
+          answersContainer.appendChild(btn);
+        });
+      }
+
+      document.querySelectorAll('.timer-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          timerEnabled = !timerEnabled;
+          if (!timerEnabled) stopTimer();
+          updateTimerUI();
+        });
+      });
+      document.querySelectorAll('.timer-duration').forEach(function (sel) {
+        sel.addEventListener('change', function () {
+          timerSeconds = parseInt(sel.value, 10);
+          updateTimerUI();
+          if (timerEnabled && timerInterval) {
+            stopTimer();
+            startTimer();
+          }
+        });
+      });
+      updateTimerUI();
+
+      btnStart.addEventListener('click', function () {
+        soundTap();
+        streak = 0;
+        streakCount.textContent = '0';
+        renderGame();
+        showScreen(game);
+        startTimer();
+      });
+
+      btnNextCorrect.addEventListener('click', function () {
+        soundTap();
+        renderGame();
+        showScreen(game);
+        startTimer();
+      });
+
+      btnNextWrong.addEventListener('click', function () {
+        soundTap();
+        showScreen(game);
+        startTimer();
+      });
+
+      document.querySelectorAll('.btn-restart').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          soundTap();
+          stopTimer();
+          streak = 0;
+          streakCount.textContent = '0';
+          showScreen(welcome);
+        });
+      });
+
+      renderGame();
+    })();
+  </script>
+</body>
+</html>
