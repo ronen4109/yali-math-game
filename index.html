@@ -20,12 +20,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-      padding: 20px;
+      background: linear-gradient(160deg, #5b4d8e 0%, #7b6bb8 35%, #9d7dc9 60%, #c99cc8 85%, #f0c4e4 100%);
+      padding: 24px;
       transition: background 0.5s ease;
     }
     body.correct {
-      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      background: linear-gradient(160deg, #0d7a6f 0%, #11998e 40%, #38ef7d 100%);
     }
     body.wrong {
       animation: shake 0.5s ease-in-out;
@@ -40,7 +40,7 @@
     .screen {
       display: none;
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
       text-align: center;
       animation: fadeIn 0.4s ease;
     }
@@ -48,63 +48,74 @@
       display: block;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
+      from { opacity: 0; transform: scale(0.97); }
       to { opacity: 1; transform: scale(1); }
+    }
+    .card {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.35);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
     /* מסך פתיחה */
     .welcome h1 {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       color: #fff;
-      text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2);
+      margin-bottom: 0.5rem;
       line-height: 1.3;
+      letter-spacing: 0.02em;
     }
     .welcome .sub {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: rgba(255,255,255,0.95);
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
     .btn-start {
       font-family: 'Varela Round', sans-serif;
-      font-size: 1.8rem;
-      padding: 18px 50px;
+      font-size: 1.75rem;
+      padding: 18px 48px;
       border: none;
       border-radius: 50px;
-      background: linear-gradient(145deg, #ffd93d, #ff9f43);
-      color: #5d3a1a;
+      background: linear-gradient(145deg, #ffd93d 0%, #ffb347 50%, #ff9f43 100%);
+      color: #4a3512;
       cursor: pointer;
-      box-shadow: 0 6px 0 #d68910, 0 10px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 0 #c77a0e, 0 10px 28px rgba(0,0,0,0.22);
       transition: transform 0.15s, box-shadow 0.15s;
     }
     .btn-start:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 0 #d68910, 0 12px 24px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 0 #c77a0e, 0 14px 32px rgba(0,0,0,0.28);
     }
     .btn-start:active {
       transform: translateY(4px);
-      box-shadow: 0 2px 0 #d68910, 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 0 #c77a0e, 0 4px 14px rgba(0,0,0,0.2);
     }
     .timer-toggle {
       font-family: 'Varela Round', sans-serif;
-      font-size: 1.1rem;
-      padding: 12px 24px;
-      margin-bottom: 1.5rem;
-      border: 3px solid rgba(255,255,255,0.8);
-      border-radius: 30px;
+      font-size: 1.05rem;
+      padding: 11px 20px;
+      border: 2px solid rgba(255,255,255,0.75);
+      border-radius: 26px;
       background: rgba(255,255,255,0.2);
       color: #fff;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
     .timer-toggle:hover {
       background: rgba(255,255,255,0.35);
+      border-color: rgba(255,255,255,0.95);
     }
     .timer-toggle.on {
-      background: rgba(56, 239, 125, 0.4);
-      border-color: #38ef7d;
+      background: rgba(56, 239, 125, 0.45);
+      border-color: rgba(56, 239, 125, 0.9);
+      box-shadow: 0 2px 14px rgba(56, 239, 125, 0.3);
     }
     .timer-settings {
       display: inline-flex;
@@ -115,29 +126,59 @@
     }
     .timer-duration {
       font-family: 'Varela Round', sans-serif;
-      font-size: 1rem;
-      padding: 8px 12px;
-      border: 2px solid rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border: 2px solid rgba(255,255,255,0.75);
       border-radius: 20px;
       background: rgba(255,255,255,0.25);
       color: #fff;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .timer-duration option { background: #5a4a8a; color: #fff; }
+    .timer-duration option { background: #4a3d6e; color: #fff; }
     .timer-duration.hidden { display: none; }
+    /* רמת קושי */
+    .difficulty-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .difficulty-btn {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1rem;
+      padding: 10px 18px;
+      border: 2px solid rgba(255,255,255,0.7);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .difficulty-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .difficulty-btn.active {
+      background: rgba(255,255,255,0.45);
+      border-color: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
     /* מסך תרגיל */
     .streak-box {
-      background: rgba(255,255,255,0.3);
-      border-radius: 20px;
-      padding: 10px 20px;
-      margin-bottom: 1.5rem;
-      font-size: 1.2rem;
+      background: rgba(255,255,255,0.28);
+      border-radius: 22px;
+      padding: 10px 18px;
+      font-size: 1.15rem;
       color: #fff;
       display: inline-block;
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .streak-box span {
       font-weight: bold;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
     }
     .game-top {
       display: flex;
@@ -145,15 +186,17 @@
       justify-content: center;
       align-items: center;
       gap: 12px;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     .timer-box {
-      background: rgba(255,255,255,0.35);
-      border-radius: 20px;
-      padding: 10px 20px;
-      font-size: 1.4rem;
+      background: rgba(255,255,255,0.3);
+      border-radius: 22px;
+      padding: 10px 18px;
+      font-size: 1.35rem;
       color: #fff;
       direction: ltr;
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .timer-box.low { background: rgba(255, 150, 50, 0.6); }
     .timer-box.urgent { background: rgba(255, 80, 80, 0.6); animation: pulse-timer 0.8s ease infinite; }
@@ -162,37 +205,45 @@
       50% { transform: scale(1.05); }
     }
     .timer-box.hidden { display: none; }
+    .exercise-wrap {
+      background: rgba(255,255,255,0.2);
+      border-radius: 24px;
+      padding: 1.5rem 2rem;
+      margin: 1.25rem 0 1.5rem;
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: inset 0 2px 12px rgba(255,255,255,0.15), 0 6px 20px rgba(0,0,0,0.1);
+    }
     .exercise-text {
       font-size: 3rem;
       color: #fff;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-      margin: 1.5rem 0 2rem;
-      letter-spacing: 2px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+      letter-spacing: 3px;
       direction: ltr;
     }
     .answers {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
     .answer-btn {
       font-family: 'Varela Round', sans-serif;
       font-size: 1.6rem;
       padding: 22px 16px;
-      border: 4px solid rgba(255,255,255,0.8);
-      border-radius: 20px;
-      background: rgba(255,255,255,0.25);
+      border: 2px solid rgba(255,255,255,0.7);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.2) 100%);
       color: #fff;
       cursor: pointer;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       transition: all 0.2s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
     .answer-btn:hover {
-      background: rgba(255,255,255,0.45);
-      transform: scale(1.03);
-      border-color: #fff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.3) 100%);
+      transform: scale(1.02);
+      border-color: rgba(255,255,255,0.95);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.15);
     }
     .answer-btn:active {
       transform: scale(0.98);
@@ -226,19 +277,20 @@
     .result-screen .next-btn {
       font-family: 'Varela Round', sans-serif;
       font-size: 1.4rem;
-      margin-top: 2rem;
-      padding: 14px 40px;
+      margin-top: 1.5rem;
+      padding: 14px 42px;
       border: none;
-      border-radius: 30px;
-      background: rgba(255,255,255,0.9);
-      color: #11998e;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #fff 0%, #e8f8f5 100%);
+      color: #0d7a6f;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .result-screen .next-btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.04);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.22);
     }
     .wrong-encourage {
       font-size: 1.3rem;
@@ -249,16 +301,18 @@
       font-family: 'Varela Round', sans-serif;
       font-size: 1rem;
       margin-top: 1.5rem;
-      padding: 10px 20px;
-      border: 2px solid rgba(255,255,255,0.7);
-      border-radius: 25px;
-      background: transparent;
-      color: rgba(255,255,255,0.95);
+      padding: 11px 22px;
+      border: 2px solid rgba(255,255,255,0.65);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.98);
       cursor: pointer;
       transition: all 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
     .btn-restart:hover {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.85);
     }
 
     .confetti-container {
@@ -293,82 +347,130 @@
 <body>
   <!-- מסך פתיחה -->
   <section id="welcome" class="screen active welcome">
-    <h1>🌈 החשבון של יהלי 🌈</h1>
-    <p class="sub">בוא נתאמן בחשבון!</p>
-    <div class="timer-settings">
-      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
-      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
-        <option value="15">15 שניות</option>
-        <option value="20">20 שניות</option>
-        <option value="30" selected>30 שניות</option>
-        <option value="45">45 שניות</option>
-        <option value="60">60 שניות</option>
-        <option value="90">90 שניות</option>
-      </select>
+    <div class="card">
+      <h1>🌈 החשבון של יהלי 🌈</h1>
+      <p class="sub">בוא נתאמן בחשבון!</p>
+      <p class="difficulty-label" style="font-size:1rem;color:rgba(255,255,255,0.9);margin-bottom:8px;">רמת קושי</p>
+      <div class="difficulty-row">
+        <button type="button" class="difficulty-btn" data-level="easy">קל</button>
+        <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
+        <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
+      </div>
+      <div class="timer-settings">
+        <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
+        <select class="timer-duration hidden" aria-label="משך הטיימר">
+          <option value="15">15 שניות</option>
+          <option value="20">20 שניות</option>
+          <option value="30" selected>30 שניות</option>
+          <option value="45">45 שניות</option>
+          <option value="60">דקה</option>
+          <option value="90">דקה וחצי</option>
+          <option value="120">2 דקות</option>
+          <option value="180">3 דקות</option>
+          <option value="240">4 דקות</option>
+          <option value="300">5 דקות</option>
+        </select>
+      </div>
+      <button type="button" class="btn-start" id="btnStart">התחל</button>
     </div>
-    <button type="button" class="btn-start" id="btnStart">התחל</button>
   </section>
 
   <!-- מסך תרגיל -->
   <section id="game" class="screen game">
-    <div class="game-top">
-      <div class="streak-box">🔥 רצף: <span id="streakCount">0</span></div>
-      <div id="timerBox" class="timer-box hidden">⏱ <span id="timerNum">30</span></div>
-      <div class="timer-settings">
-        <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
-        <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
+    <div class="card">
+      <div class="game-top">
+        <div class="streak-box">🔥 רצף: <span id="streakCount">0</span></div>
+        <div id="timerBox" class="timer-box hidden">⏱ <span id="timerNum">30</span></div>
+        <div class="timer-settings">
+          <button type="button" class="timer-toggle" aria-pressed="false">⏱ טיימר</button>
+          <select class="timer-duration hidden" aria-label="משך הטיימר">
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="30" selected>30</option>
+            <option value="45">45</option>
+            <option value="60">60</option>
+            <option value="90">90</option>
+            <option value="120">2 דק'</option>
+            <option value="180">3 דק'</option>
+            <option value="240">4 דק'</option>
+            <option value="300">5 דק'</option>
+          </select>
+        </div>
+      </div>
+      <div class="exercise-wrap">
+        <div class="exercise-text" id="exerciseText">23 + 5</div>
+      </div>
+      <div class="answers" id="answersContainer"></div>
+      <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
+    </div>
+    <div class="difficulty-row" style="margin-top:14px;">
+      <span style="color:rgba(255,255,255,0.85);font-size:0.95rem;">רמה:</span>
+      <button type="button" class="difficulty-btn" data-level="easy">קל</button>
+      <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
+      <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
+    </div>
+  </section>
+
+  <!-- מסך תשובה נכונה -->
+  <section id="correctScreen" class="screen result-screen">
+    <div class="card">
+      <div class="emoji">🎉 🌟 🎉</div>
+      <h2>כל הכבוד יהלי!</h2>
+      <p class="wrong-encourage">מצוין!</p>
+      <div class="timer-settings" style="margin-top: 1rem;">
+        <button type="button" class="timer-toggle" aria-pressed="false">⏱ טיימר</button>
+        <select class="timer-duration hidden" aria-label="משך הטיימר">
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="30" selected>30</option>
           <option value="45">45</option>
           <option value="60">60</option>
           <option value="90">90</option>
+          <option value="120">2 דק'</option>
+          <option value="180">3 דק'</option>
+          <option value="240">4 דק'</option>
+          <option value="300">5 דק'</option>
         </select>
       </div>
+      <button type="button" class="next-btn" id="btnNextCorrect">הבא →</button>
+      <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
     </div>
-    <div class="exercise-text" id="exerciseText">23 + 5</div>
-    <div class="answers" id="answersContainer"></div>
-    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
-  </section>
-
-  <!-- מסך תשובה נכונה -->
-  <section id="correctScreen" class="screen result-screen">
-    <div class="emoji">🎉 🌟 🎉</div>
-    <h2>כל הכבוד יהלי!</h2>
-    <p class="wrong-encourage">מצוין!</p>
-    <div class="timer-settings" style="margin-top: 1rem;">
-      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
-      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="30" selected>30</option>
-        <option value="45">45</option>
-        <option value="60">60</option>
-        <option value="90">90</option>
-      </select>
+    <div class="difficulty-row" style="margin-top:14px;">
+      <button type="button" class="difficulty-btn" data-level="easy">קל</button>
+      <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
+      <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
     </div>
-    <button type="button" class="next-btn" id="btnNextCorrect">הבא →</button>
-    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
   </section>
 
   <!-- מסך תשובה שגויה -->
   <section id="wrongScreen" class="screen result-screen">
-    <div class="emoji">💪 😊</div>
-    <h2>כמעט! נסה שוב</h2>
-    <p class="wrong-encourage">אפשר לנסות שוב – אתה יכול!</p>
-    <div class="timer-settings" style="margin-top: 1rem;">
-      <button type="button" class="timer-toggle" aria-pressed="false">⏱ הוסף טיימר</button>
-      <select class="timer-duration hidden" aria-label="משך הטיימר בשניות">
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="30" selected>30</option>
-        <option value="45">45</option>
-        <option value="60">60</option>
-        <option value="90">90</option>
-      </select>
+    <div class="card">
+      <div class="emoji">💪 😊</div>
+      <h2>כמעט! נסה שוב</h2>
+      <p class="wrong-encourage">אפשר לנסות שוב – אתה יכול!</p>
+      <div class="timer-settings" style="margin-top: 1rem;">
+        <button type="button" class="timer-toggle" aria-pressed="false">⏱ טיימר</button>
+        <select class="timer-duration hidden" aria-label="משך הטיימר">
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="30" selected>30</option>
+          <option value="45">45</option>
+          <option value="60">60</option>
+          <option value="90">90</option>
+          <option value="120">2 דק'</option>
+          <option value="180">3 דק'</option>
+          <option value="240">4 דק'</option>
+          <option value="300">5 דק'</option>
+        </select>
+      </div>
+      <button type="button" class="next-btn" id="btnNextWrong">נסה שוב</button>
+      <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
     </div>
-    <button type="button" class="next-btn" id="btnNextWrong">נסה שוב</button>
-    <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
+    <div class="difficulty-row" style="margin-top:14px;">
+      <button type="button" class="difficulty-btn" data-level="easy">קל</button>
+      <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
+      <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
+    </div>
   </section>
 
   <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
@@ -396,6 +498,7 @@
       let timerEnabled = false;
       let timerInterval = null;
       let timerSeconds = 30;
+      let difficulty = 'medium';
 
       function updateTimerUI() {
         document.querySelectorAll('.timer-toggle').forEach(function (btn) {
@@ -403,9 +506,15 @@
           btn.classList.toggle('on', timerEnabled);
           btn.setAttribute('aria-pressed', timerEnabled);
         });
-        document.querySelectorAll('.timer-duration').forEach(function (sel) {
-          sel.value = String(timerSeconds);
-          sel.classList.toggle('hidden', !timerEnabled);
+document.querySelectorAll('.timer-duration').forEach(function (sel) {
+        sel.value = String(timerSeconds);
+        sel.classList.toggle('hidden', !timerEnabled);
+      });
+      }
+
+      function updateDifficultyUI() {
+        document.querySelectorAll('.difficulty-btn').forEach(function (btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-level') === difficulty);
         });
       }
 
@@ -458,31 +567,41 @@
         return Math.floor(Math.random() * (max + 1));
       }
 
+      function getMaxForDifficulty() {
+        if (difficulty === 'easy') return 50;
+        if (difficulty === 'hard') return 200;
+        return 200;
+      }
+
       function genExercise() {
+        var maxVal = getMaxForDifficulty();
+        var multMax = difficulty === 'easy' ? 5 : difficulty === 'hard' ? 14 : 10;
+        var offsetRange = difficulty === 'easy' ? 10 : difficulty === 'hard' ? 25 : 20;
         const op = rand(2);
         let a, b, result;
         if (op === 0) {
-          a = rand(198) + 1;
-          b = rand(200 - a);
+          a = rand(maxVal - 1) + 1;
+          b = rand(maxVal - a);
           result = a + b;
           exerciseText.textContent = a + ' + ' + b;
         } else if (op === 1) {
-          var larger = rand(199) + 1;
+          var larger = rand(maxVal - 1) + 1;
           var smaller = rand(larger);
           result = larger - smaller;
           exerciseText.textContent = larger + ' − ' + smaller;
         } else {
-          a = rand(13) + 1;
-          b = rand(13) + 1;
+          a = rand(multMax - 1) + 1;
+          b = rand(multMax - 1) + 1;
           result = a * b;
           exerciseText.textContent = a + ' × ' + b;
         }
         currentAnswer = result;
         const numOptions = 3 + rand(1);
         const options = new Set([result]);
+        var optionsMax = difficulty === 'easy' ? 50 : 200;
         while (options.size < numOptions) {
-          const offset = rand(40) - 20;
-          if (offset !== 0) options.add(Math.max(0, Math.min(200, result + offset)));
+          const offset = rand(offsetRange * 2) - offsetRange;
+          if (offset !== 0) options.add(Math.max(0, Math.min(optionsMax, result + offset)));
         }
         currentOptions = Array.from(options).sort(function (x, y) { return x - y; });
         return currentOptions;
@@ -597,6 +716,14 @@
         });
       });
       updateTimerUI();
+      updateDifficultyUI();
+
+      document.querySelectorAll('.difficulty-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          difficulty = btn.getAttribute('data-level');
+          updateDifficultyUI();
+        });
+      });
 
       btnStart.addEventListener('click', function () {
         soundTap();
