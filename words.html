@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>החשבון של יהלי</title>
+  <title>המילים של יהלי</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Varela Round', sans-serif;
       min-height: 100vh;
@@ -44,9 +40,7 @@
       text-align: center;
       animation: fadeIn 0.4s ease;
     }
-    .screen.active {
-      display: block;
-    }
+    .screen.active { display: block; }
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.97); }
       to { opacity: 1; transform: scale(1); }
@@ -59,14 +53,12 @@
       border: 1px solid rgba(255,255,255,0.35);
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
-    /* מסך פתיחה */
     .welcome h1 {
       font-size: 2.5rem;
       color: #fff;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2);
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.25);
       margin-bottom: 0.5rem;
       line-height: 1.3;
-      letter-spacing: 0.02em;
     }
     .welcome .sub {
       font-size: 1.25rem;
@@ -137,7 +129,6 @@
     }
     .timer-duration option { background: #4a3d6e; color: #fff; }
     .timer-duration.hidden { display: none; }
-    /* רמת קושי */
     .difficulty-row {
       display: flex;
       flex-wrap: wrap;
@@ -157,15 +148,12 @@
       transition: all 0.2s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .difficulty-btn:hover {
-      background: rgba(255,255,255,0.3);
-    }
+    .difficulty-btn:hover { background: rgba(255,255,255,0.3); }
     .difficulty-btn.active {
       background: rgba(255,255,255,0.45);
       border-color: #fff;
       box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     }
-    /* מסך תרגיל */
     .streak-box {
       background: rgba(255,255,255,0.28);
       border-radius: 22px;
@@ -176,10 +164,7 @@
       border: 1px solid rgba(255,255,255,0.4);
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
-    .streak-box span {
-      font-weight: bold;
-      font-size: 1.35rem;
-    }
+    .streak-box span { font-weight: bold; font-size: 1.35rem; }
     .game-top {
       display: flex;
       flex-wrap: wrap;
@@ -199,7 +184,10 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .timer-box.low { background: rgba(255, 150, 50, 0.6); }
-    .timer-box.urgent { background: rgba(255, 80, 80, 0.6); animation: pulse-timer 0.8s ease infinite; }
+    .timer-box.urgent {
+      background: rgba(255, 80, 80, 0.6);
+      animation: pulse-timer 0.8s ease infinite;
+    }
     @keyframes pulse-timer {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -213,42 +201,61 @@
       border: 1px solid rgba(255,255,255,0.4);
       box-shadow: inset 0 2px 12px rgba(255,255,255,0.15), 0 6px 20px rgba(0,0,0,0.1);
     }
-    .exercise-text {
-      font-size: 3rem;
+    .word-display {
+      font-size: 2.8rem;
       color: #fff;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-      letter-spacing: 3px;
-      direction: ltr;
+      letter-spacing: 0.02em;
     }
-    .answers {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .word-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       margin-top: 0.5rem;
     }
-    .answer-btn {
+    .word-option-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-listen {
       font-family: 'Varela Round', sans-serif;
-      font-size: 1.6rem;
-      padding: 22px 16px;
-      border: 2px solid rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      padding: 14px 24px;
+      border: 2px solid rgba(255,255,255,0.75);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .btn-listen:hover {
+      background: rgba(255,255,255,0.4);
+      border-color: #fff;
+    }
+    .btn-answer {
+      font-family: 'Varela Round', sans-serif;
+      font-size: 1.15rem;
+      padding: 14px 28px;
+      border: 2px solid rgba(255,255,255,0.8);
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.2) 100%);
       color: #fff;
       cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
     }
-    .answer-btn:hover {
+    .btn-answer:hover {
       background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.3) 100%);
       transform: scale(1.02);
-      border-color: rgba(255,255,255,0.95);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.15);
     }
-    .answer-btn:active {
-      transform: scale(0.98);
-    }
-    .answer-btn.wrong-choice {
+    .btn-answer.wrong-choice {
       background: rgba(255, 80, 80, 0.6);
       border-color: #ff4444;
       animation: pulse-red 0.3s ease;
@@ -258,7 +265,6 @@
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
     }
-    /* מסך צודק */
     .result-screen .emoji {
       font-size: 5rem;
       margin: 1rem 0;
@@ -274,6 +280,7 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
       margin-bottom: 1rem;
     }
+    .wrong-encourage { font-size: 1.3rem; color: #fff; margin-top: 0.5rem; }
     .result-screen .next-btn {
       font-family: 'Varela Round', sans-serif;
       font-size: 1.4rem;
@@ -292,11 +299,6 @@
       transform: scale(1.04);
       box-shadow: 0 6px 22px rgba(0,0,0,0.22);
     }
-    .wrong-encourage {
-      font-size: 1.3rem;
-      color: #fff;
-      margin-top: 0.5rem;
-    }
     .btn-restart {
       font-family: 'Varela Round', sans-serif;
       font-size: 1rem;
@@ -314,7 +316,20 @@
       background: rgba(255,255,255,0.25);
       border-color: rgba(255,255,255,0.85);
     }
-
+    .link-other {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.6);
+    }
+    .link-other:hover { color: #fff; }
+    .tts-warn {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.8);
+      margin-top: 0.75rem;
+    }
     .confetti-container {
       position: fixed;
       inset: 0;
@@ -333,24 +348,17 @@
     .confetti-piece.circle { border-radius: 50%; }
     .confetti-piece.rect { width: 14px; height: 7px; }
     @keyframes confetti-fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0.3;
-      }
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0.3; }
     }
   </style>
 </head>
 <body>
-  <!-- מסך פתיחה -->
   <section id="welcome" class="screen active welcome">
     <div class="card">
-      <h1>🌈 החשבון של יהלי 🌈</h1>
-      <p class="sub">בוא נתאמן בחשבון!</p>
-      <p class="difficulty-label" style="font-size:1rem;color:rgba(255,255,255,0.9);margin-bottom:8px;">רמת קושי</p>
+      <h1>📖 המילים של יהלי 📖</h1>
+      <p class="sub">קרא את המילה ובחר איזה קול אמר אותה!</p>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.9);margin-bottom:8px;">רמת קושי</p>
       <div class="difficulty-row">
         <button type="button" class="difficulty-btn" data-level="easy">קל</button>
         <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
@@ -372,11 +380,11 @@
         </select>
       </div>
       <button type="button" class="btn-start" id="btnStart">התחל</button>
-      <a href="words.html" class="link-other" style="display:inline-block;margin-top:1rem;font-size:1rem;color:rgba(255,255,255,0.9);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.6);">משחק מילים →</a>
+      <p class="tts-warn" id="ttsWarn"></p>
+      <a href="index.html" class="link-other">משחק חשבון ←</a>
     </div>
   </section>
 
-  <!-- מסך תרגיל -->
   <section id="game" class="screen game">
     <div class="card">
       <div class="game-top">
@@ -399,9 +407,10 @@
         </div>
       </div>
       <div class="exercise-wrap">
-        <div class="exercise-text" id="exerciseText">23 + 5</div>
+        <div class="word-display" id="wordDisplay">מילה</div>
       </div>
-      <div class="answers" id="answersContainer"></div>
+      <p style="color:rgba(255,255,255,0.9);font-size:1rem;margin-bottom:8px;">האזן לכל אפשרות ובחר את המילה שהתאימה</p>
+      <div class="word-options" id="wordOptionsContainer"></div>
       <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
     </div>
     <div class="difficulty-row" style="margin-top:14px;">
@@ -412,13 +421,12 @@
     </div>
   </section>
 
-  <!-- מסך תשובה נכונה -->
   <section id="correctScreen" class="screen result-screen">
     <div class="card">
       <div class="emoji">🎉 🌟 🎉</div>
       <h2>כל הכבוד יהלי!</h2>
       <p class="wrong-encourage">מצוין!</p>
-      <div class="timer-settings" style="margin-top: 1rem;">
+      <div class="timer-settings" style="margin-top:1rem;">
         <button type="button" class="timer-toggle" aria-pressed="false">⏱ טיימר</button>
         <select class="timer-duration hidden" aria-label="משך הטיימר">
           <option value="15">15</option>
@@ -441,15 +449,15 @@
       <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
       <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
     </div>
+    <a href="index.html" class="link-other" style="margin-top:12px;">משחק חשבון ←</a>
   </section>
 
-  <!-- מסך תשובה שגויה -->
   <section id="wrongScreen" class="screen result-screen">
     <div class="card">
       <div class="emoji">💪 😊</div>
       <h2>כמעט! נסה שוב</h2>
       <p class="wrong-encourage">אפשר לנסות שוב – אתה יכול!</p>
-      <div class="timer-settings" style="margin-top: 1rem;">
+      <div class="timer-settings" style="margin-top:1rem;">
         <button type="button" class="timer-toggle" aria-pressed="false">⏱ טיימר</button>
         <select class="timer-duration hidden" aria-label="משך הטיימר">
           <option value="15">15</option>
@@ -472,34 +480,146 @@
       <button type="button" class="difficulty-btn active" data-level="medium">בינוני</button>
       <button type="button" class="difficulty-btn" data-level="hard">קשה</button>
     </div>
+    <a href="index.html" class="link-other" style="margin-top:12px;">משחק חשבון ←</a>
   </section>
 
   <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
 
   <script>
     (function () {
-      const welcome = document.getElementById('welcome');
-      const game = document.getElementById('game');
-      const correctScreen = document.getElementById('correctScreen');
-      const wrongScreen = document.getElementById('wrongScreen');
-      const exerciseText = document.getElementById('exerciseText');
-      const answersContainer = document.getElementById('answersContainer');
-      const streakCount = document.getElementById('streakCount');
-      const btnStart = document.getElementById('btnStart');
-      const btnNextCorrect = document.getElementById('btnNextCorrect');
-      const btnNextWrong = document.getElementById('btnNextWrong');
-      const confettiContainer = document.getElementById('confettiContainer');
-      const timerBox = document.getElementById('timerBox');
-      const timerNum = document.getElementById('timerNum');
+      var WORDS_EASY = [
+        'בית', 'יד', 'ראש', 'כלב', 'חתול', 'אמא', 'אבא', 'מים', 'שמש', 'ספר',
+        'דג', 'עץ', 'פרח', 'אור', 'לב', 'פה', 'עין', 'רגל', 'שולחן', 'כיסא',
+        'דלת', 'חלון', 'מיטה', 'תפוח', 'לחם', 'חלב', 'גבינה', 'ביצה', 'ציפור', 'נמלה'
+      ];
+      var WORDS_MEDIUM = [
+        'כלב', 'חתול', 'ציפור', 'דג', 'פרפר', 'סוס', 'פרה', 'כבש', 'אריה', 'דוב',
+        'בית', 'דלת', 'חלון', 'שולחן', 'כיסא', 'מיטה', 'ספר', 'עפרון', 'מחברת', 'תיק',
+        'תפוח', 'בננה', 'ענבים', 'תפוז', 'אבטיח', 'מלפפון', 'עגבניה', 'גזר',
+        'אדום', 'כחול', 'ירוק', 'צהוב', 'לבן', 'שחור', 'חום', 'ורוד',
+        'ראש', 'יד', 'רגל', 'עין', 'אוזן', 'אף', 'פה', 'בטן', 'גב',
+        'אמא', 'אבא', 'אח', 'אחות', 'סבא', 'סבתא', 'חבר', 'מורה',
+        'שמש', 'ירח', 'כוכב', 'אור', 'מים', 'אש', 'רוח', 'גשם', 'שלג'
+      ];
+      var WORDS_HARD = WORDS_MEDIUM.concat([
+        'דולפין', 'פיל', 'תנין', 'נשר', 'עכביש', 'ארנב', 'צב', 'ינשוף', 'דבורה', 'גמל', 'קוף',
+        'מחשב', 'טלפון', 'טלוויזיה', 'מקרר', 'מזגן', 'מנורה', 'שעון',
+        'מלפפון', 'חציל', 'בצל', 'שום', 'פלפל', 'תות', 'רימון', 'אננס', 'מנגו', 'אפרסק', 'שזיף', 'תפוח אדמה', 'חמניה', 'כרוב', 'תרד',
+        'מכונית', 'אוטובוס', 'אופניים', 'רכבת', 'מטוס', 'ספינה', 'מסוק',
+        'ספרייה', 'בית ספר', 'גן', 'בית חולים', 'חנות', 'פארק', 'מרפאה', 'מכולת',
+        'מצוין', 'מעניין', 'מהנה', 'יפה', 'גדול', 'קטן', 'חם', 'קר',
+        'משפחה', 'חברה', 'כיתה', 'ספורט', 'ריקוד', 'שירה', 'ציור', 'קריאה', 'כתיבה',
+        'חופש', 'חורף', 'קיץ', 'סתיו', 'אביב', 'בוקר', 'ערב', 'לילה', 'שבת', 'חג'
+      ]);
 
-      let streak = 0;
-      let currentAnswer = 0;
-      let currentOptions = [];
-      let audioCtx = null;
-      let timerEnabled = false;
-      let timerInterval = null;
-      let timerSeconds = 30;
-      let difficulty = 'medium';
+      var welcome = document.getElementById('welcome');
+      var game = document.getElementById('game');
+      var correctScreen = document.getElementById('correctScreen');
+      var wrongScreen = document.getElementById('wrongScreen');
+      var wordDisplay = document.getElementById('wordDisplay');
+      var wordOptionsContainer = document.getElementById('wordOptionsContainer');
+      var streakCount = document.getElementById('streakCount');
+      var btnStart = document.getElementById('btnStart');
+      var btnNextCorrect = document.getElementById('btnNextCorrect');
+      var btnNextWrong = document.getElementById('btnNextWrong');
+      var confettiContainer = document.getElementById('confettiContainer');
+      var timerBox = document.getElementById('timerBox');
+      var timerNum = document.getElementById('timerNum');
+      var ttsWarn = document.getElementById('ttsWarn');
+
+      var streak = 0;
+      var currentCorrectIndex = 0;
+      var currentShuffledWords = [];
+      var audioCtx = null;
+      var timerEnabled = false;
+      var timerInterval = null;
+      var timerSeconds = 30;
+      var difficulty = 'medium';
+      var hebrewVoice = null;
+
+      function rand(max) {
+        return Math.floor(Math.random() * (max + 1));
+      }
+
+      function getWordsForDifficulty() {
+        if (difficulty === 'easy') return WORDS_EASY.slice();
+        if (difficulty === 'hard') return WORDS_HARD.slice();
+        return WORDS_MEDIUM.slice();
+      }
+
+      function shuffleArray(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = rand(i);
+          var t = a[i];
+          a[i] = a[j];
+          a[j] = t;
+        }
+        return a;
+      }
+
+      function getHebrewVoice() {
+        if (hebrewVoice) return hebrewVoice;
+        var voices = speechSynthesis.getVoices();
+        var heVoices = [];
+        for (var i = 0; i < voices.length; i++) {
+          if (voices[i].lang === 'he-IL' || voices[i].lang === 'he' || voices[i].lang.indexOf('he') === 0) {
+            heVoices.push(voices[i]);
+          }
+        }
+        if (heVoices.length === 0) return null;
+        for (var j = 0; j < heVoices.length; j++) {
+          if (heVoices[j].name.indexOf('Google') !== -1 || heVoices[j].name.indexOf('Premium') !== -1) {
+            hebrewVoice = heVoices[j];
+            return hebrewVoice;
+          }
+        }
+        hebrewVoice = heVoices[0];
+        return hebrewVoice;
+      }
+
+      function speakWord(word) {
+        speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(word);
+        u.lang = 'he-IL';
+        u.rate = 0.85;
+        u.pitch = 1;
+        var v = getHebrewVoice();
+        if (v) u.voice = v;
+        speechSynthesis.speak(u);
+      }
+
+      function updateTtsWarn() {
+        if (getHebrewVoice()) {
+          ttsWarn.textContent = '';
+        } else {
+          ttsWarn.textContent = 'למשחק עם קול עברית מומלץ Chrome';
+        }
+      }
+
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = function () {
+          hebrewVoice = null;
+          getHebrewVoice();
+          updateTtsWarn();
+        };
+      }
+      setTimeout(updateTtsWarn, 500);
+
+      function genExercise() {
+        var words = getWordsForDifficulty();
+        if (words.length < 4) return;
+        var correctWord = words[rand(words.length - 1)];
+        var options = [correctWord];
+        while (options.length < 4) {
+          var w = words[rand(words.length - 1)];
+          if (options.indexOf(w) === -1) options.push(w);
+        }
+        currentShuffledWords = shuffleArray(options);
+        currentCorrectIndex = currentShuffledWords.indexOf(correctWord);
+        wordDisplay.textContent = correctWord;
+        return currentShuffledWords;
+      }
 
       function updateTimerUI() {
         document.querySelectorAll('.timer-toggle').forEach(function (btn) {
@@ -507,10 +627,10 @@
           btn.classList.toggle('on', timerEnabled);
           btn.setAttribute('aria-pressed', timerEnabled);
         });
-document.querySelectorAll('.timer-duration').forEach(function (sel) {
-        sel.value = String(timerSeconds);
-        sel.classList.toggle('hidden', !timerEnabled);
-      });
+        document.querySelectorAll('.timer-duration').forEach(function (sel) {
+          sel.value = String(timerSeconds);
+          sel.classList.toggle('hidden', !timerEnabled);
+        });
       }
 
       function updateDifficultyUI() {
@@ -579,50 +699,6 @@ document.querySelectorAll('.timer-duration').forEach(function (sel) {
         });
       }
 
-      function rand(max) {
-        return Math.floor(Math.random() * (max + 1));
-      }
-
-      function getMaxForDifficulty() {
-        if (difficulty === 'easy') return 50;
-        if (difficulty === 'hard') return 200;
-        return 200;
-      }
-
-      function genExercise() {
-        var maxVal = getMaxForDifficulty();
-        var multMax = difficulty === 'easy' ? 5 : difficulty === 'hard' ? 14 : 10;
-        var offsetRange = difficulty === 'easy' ? 10 : difficulty === 'hard' ? 25 : 20;
-        const op = rand(2);
-        let a, b, result;
-        if (op === 0) {
-          a = rand(maxVal - 1) + 1;
-          b = rand(maxVal - a);
-          result = a + b;
-          exerciseText.textContent = a + ' + ' + b;
-        } else if (op === 1) {
-          var larger = rand(maxVal - 1) + 1;
-          var smaller = rand(larger);
-          result = larger - smaller;
-          exerciseText.textContent = larger + ' − ' + smaller;
-        } else {
-          a = rand(multMax - 1) + 1;
-          b = rand(multMax - 1) + 1;
-          result = a * b;
-          exerciseText.textContent = a + ' × ' + b;
-        }
-        currentAnswer = result;
-        const numOptions = 3 + rand(1);
-        const options = new Set([result]);
-        var optionsMax = difficulty === 'easy' ? 50 : 200;
-        while (options.size < numOptions) {
-          const offset = rand(offsetRange * 2) - offsetRange;
-          if (offset !== 0) options.add(Math.max(0, Math.min(optionsMax, result + offset)));
-        }
-        currentOptions = Array.from(options).sort(function (x, y) { return x - y; });
-        return currentOptions;
-      }
-
       function showScreen(screenEl) {
         document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
         screenEl.classList.add('active');
@@ -683,35 +759,49 @@ document.querySelectorAll('.timer-duration').forEach(function (sel) {
       }
 
       function renderGame() {
-        const options = genExercise();
-        answersContainer.innerHTML = '';
-        options.forEach(function (val) {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'answer-btn';
-          btn.textContent = val;
-          btn.addEventListener('click', function () {
-            stopTimer();
-            if (val === currentAnswer) {
-              soundCorrect();
-              streak++;
-              streakCount.textContent = streak;
-              document.body.classList.add('correct');
-              showScreen(correctScreen);
-              runConfetti();
-            } else {
-              soundWrong();
-              streak = 0;
-              streakCount.textContent = '0';
-              btn.classList.add('wrong-choice');
-              document.body.classList.add('wrong');
-              setTimeout(function () {
-                showScreen(wrongScreen);
-              }, 600);
-            }
-          });
-          answersContainer.appendChild(btn);
-        });
+        genExercise();
+        wordOptionsContainer.innerHTML = '';
+        for (var i = 0; i < currentShuffledWords.length; i++) {
+          (function (idx) {
+            var word = currentShuffledWords[idx];
+            var row = document.createElement('div');
+            row.className = 'word-option-row';
+            var listenBtn = document.createElement('button');
+            listenBtn.type = 'button';
+            listenBtn.className = 'btn-listen';
+            listenBtn.innerHTML = '🔊 האזן';
+            listenBtn.addEventListener('click', function () {
+              speakWord(word);
+            });
+            var answerBtn = document.createElement('button');
+            answerBtn.type = 'button';
+            answerBtn.className = 'btn-answer';
+            answerBtn.textContent = 'זו התשובה';
+            answerBtn.addEventListener('click', function () {
+              stopTimer();
+              if (idx === currentCorrectIndex) {
+                soundCorrect();
+                streak++;
+                streakCount.textContent = streak;
+                document.body.classList.add('correct');
+                showScreen(correctScreen);
+                runConfetti();
+              } else {
+                soundWrong();
+                streak = 0;
+                streakCount.textContent = '0';
+                answerBtn.classList.add('wrong-choice');
+                document.body.classList.add('wrong');
+                setTimeout(function () {
+                  showScreen(wrongScreen);
+                }, 600);
+              }
+            });
+            row.appendChild(listenBtn);
+            row.appendChild(answerBtn);
+            wordOptionsContainer.appendChild(row);
+          })(i);
+        }
       }
 
       document.querySelectorAll('.timer-toggle').forEach(function (btn) {
