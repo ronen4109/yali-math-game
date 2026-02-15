@@ -410,6 +410,7 @@
         <div class="word-display" id="wordDisplay">מילה</div>
       </div>
       <p style="color:rgba(255,255,255,0.9);font-size:1rem;margin-bottom:8px;">האזן לכל אפשרות ובחר את המילה שהתאימה</p>
+      <p class="tts-warn" style="margin-bottom:8px;font-size:0.85rem;">לא שומעים קול? נסו דפדפן Chrome או בדקו שהמכשיר תומך בדיבור עברית</p>
       <div class="word-options" id="wordOptionsContainer"></div>
       <button type="button" class="btn-restart">🏠 התחל מההתחלה</button>
     </div>
@@ -593,7 +594,7 @@
         if (getHebrewVoice()) {
           ttsWarn.textContent = '';
         } else {
-          ttsWarn.textContent = 'למשחק עם קול עברית מומלץ Chrome';
+          ttsWarn.textContent = 'למשחק עם קול עברית: מומלץ Chrome. באנדרואיד ייתכן שיהיה צורך בהפעלת עברית בהגדרות המכשיר.';
         }
       }
 
@@ -646,11 +647,7 @@
 
       function ensureAudioReady(cb) {
         var ctx = getAudio();
-        if (ctx.state === 'suspended') {
-          ctx.resume().then(cb);
-        } else {
-          cb();
-        }
+        ctx.resume().then(cb).catch(function () { cb(); });
       }
 
       function playTone(freq, start, duration, type) {

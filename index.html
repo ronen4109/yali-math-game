@@ -526,11 +526,7 @@ document.querySelectorAll('.timer-duration').forEach(function (sel) {
 
       function ensureAudioReady(cb) {
         var ctx = getAudio();
-        if (ctx.state === 'suspended') {
-          ctx.resume().then(cb);
-        } else {
-          cb();
-        }
+        ctx.resume().then(cb).catch(function () { cb(); });
       }
 
       function playTone(freq, start, duration, type) {
